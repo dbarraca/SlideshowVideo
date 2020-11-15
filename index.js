@@ -28,9 +28,12 @@ var videoOptions = {
 //     console.log("visited root route")
 // });
 
+
 app.get('/', function(req, res) {
+     res.sendFile(path.join(__dirname + '/index.html'));
+});
 
-
+app.get('/default', function(req, res) {
     videoshow(images, videoOptions)
     .audio('./audio/Audio.m4a')
     .save('./videos/video.mp4')
