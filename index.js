@@ -2,6 +2,9 @@
 const express = require("express");
 var videoshow = require('videoshow');
 
+var app = express()
+
+
 var images = ['image.jpg'];
 
 var videoOptions = {
@@ -17,6 +20,12 @@ var videoOptions = {
     format: 'mp4',
     pixelFormat: 'yuv420p'
 }
+
+// Root route response
+app.get('/', (req, res) => {
+    res.send('Index')
+    console.log("visited root route")
+});
 
 // videoshow(images, videoOptions)
 // // .audio('./audio/Audio.m4a')
