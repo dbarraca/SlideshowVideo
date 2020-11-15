@@ -6,13 +6,13 @@ var videoshow = require('videoshow');
 var app = express()
 
 
-var images = ['image.jpg'];
+var images = ['./images/image.png'];
 
 var videoOptions = {
     fps: 25,
-    loop: 5, // seconds
-    transition: true,
-    transitionDuration: 1, // seconds
+   loop: 10, // seconds
+    // transition: true,
+    // transitionDuration: , // seconds
     videoBitrate: 1024,
     videoCodec: 'libx264',
     size: '640x?',
@@ -32,8 +32,8 @@ app.get('/', function(req, res) {
 
 
     videoshow(images, videoOptions)
-    // .audio('./audio/Audio.m4a')
-    .save('video.mp4')
+    .audio('./audio/Audio.m4a')
+    .save('./videos/video.mp4')
     .on('start', function (command) {
         console.log("starting videoshow");
         console.log('ffmpeg process started:', command)
