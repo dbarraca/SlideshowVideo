@@ -16,17 +16,17 @@ var videoOptions = {
     pixelFormat: 'yuv420p'
 }
 
-videoshow(images, videoOptions)
-// .audio('./audio/Audio.m4a')
-.save('video.mp4')
-.on('start', function (command) {
-    console.log("starting app");
-    console.log('ffmpeg process started:', command)
-})
-.on('error', function (err, stdout, stderr) {
-    console.error('Error:', err)
-    console.error('ffmpeg stderr:', stderr)
-})
-.on('end', function (output) {
-    console.error('Video created in:', output)
-})
+// videoshow(images, videoOptions)
+// // .audio('./audio/Audio.m4a')
+// .save('video.mp4')
+// .on('start', function (command) {
+//     console.log("starting app");
+//     console.log('ffmpeg process started:', command)
+// })
+// .on('error', function (err, stdout, stderr) {
+//     console.error('Error:', err)
+//     console.error('ffmpeg stderr:', stderr)
+// })
+// .on('end', function (output) {
+//     console.error('Video created in:', output)
+// })
