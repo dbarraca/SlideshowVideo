@@ -44,8 +44,8 @@ app.get('/', function(req, res) {
     })
     .on('end', function (output) {
         console.error('Video created in:', output);
-        res.download('video.mp4');
-        res.sendFile(path.join(__dirname + '/index.html'));
+        // res.sendFile(path.join(__dirname + '/index.html'));
+        res.download(output);
     })
 });
 
