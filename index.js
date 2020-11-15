@@ -1,3 +1,5 @@
+// Requiring dependencies
+const express = require("express");
 var videoshow = require('videoshow');
 
 var images = ['image.jpg'];
