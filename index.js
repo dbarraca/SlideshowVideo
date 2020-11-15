@@ -1,5 +1,6 @@
 // Requiring dependencies
 const express = require("express");
+var path = require('path');
 var videoshow = require('videoshow');
 
 var app = express()
@@ -22,9 +23,20 @@ var videoOptions = {
 }
 
 // Root route response
-app.get('/', (req, res) => {
-    res.send('Index')
-    console.log("visited root route")
+// app.get('/', (req, res) => {
+//     res.render('index')
+//     console.log("visited root route")
+// });
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
+
+// Start Server
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+    console.log(`Pod Wuphf app running on port:${port}`);
 });
 
 // videoshow(images, videoOptions)
