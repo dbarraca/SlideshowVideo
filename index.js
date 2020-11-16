@@ -30,10 +30,14 @@ var videoOptions = {
 
 
 app.get('/', function(req, res) {
-     res.sendFile(path.join(__dirname + '/index.html'));
+    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.get('/default', function(req, res) {
+app.get('/video/create', function(req, res) {
+    res.sendFile(path.join(__dirname + '/createVideo.html'));
+});
+
+app.get('/video', function(req, res) {
     videoshow(images, videoOptions)
     .audio('./audio/Audio.m4a')
     .save('./videos/video.mp4')
