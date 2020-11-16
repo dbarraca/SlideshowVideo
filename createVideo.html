@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slideshow Video</title>
+
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+        }
+
+        form * {
+            margin: 4px 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Create Video</h1>
     <p>Provide a title, image, and audio file.</p>
 
-    <form>
+    <form action="create">
         <label>
             Name:
             <input type="text" name="name" />
