@@ -21,13 +21,13 @@
     <h1>Create Video</h1>
     <p>Provide a title, image, and audio file.</p>
 
-    <form action="/video/add" method="POST">
-        <label> Name:</label>
-        <input type="text" name="videoFilename" id="videoFilename" value="OutputVideo"/>
-<!-- 
-        <label>Image: </label>
-        <input type="file" name="image" />
+    <form action="/video/create" method="POST" enctype="multipart/form-data">
+        <label>Name: </label>
+        <input type="text" name="videoFilename" id="videoFilename" value="Video" placeholder="Output Video File Name"/>
 
+        <label>Image: </label>
+        <input type="file" name="image" id="image" />
+<!-- 
         <label>Audio: </label>
         <input type="file" name="audio" /> -->
 

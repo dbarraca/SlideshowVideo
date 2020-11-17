@@ -1,6 +1,10 @@
 const { body, validationResult } = require('express-validator');
+const fs = require('fs');
 const path = require('path');
 const videoshow = require('videoshow');
+
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
 var images = ['./images/image.png'];
 
@@ -42,6 +46,60 @@ exports.video_create_get =  function(req, res) {
     res.sendFile(path.join(__dirname + '/../createVideo.html'));
 };
 
+exports.video_create_post = [upload.single('image'), function (req, res, next) {
+    // req.file is the `audio` file
+    // req.body will hold the text fields, if there were any
+
+    var ImagePath = req.file.destination + req.file.filename + '.png';
+
+    fs.rename(req.file.destination + req.file.filename, ImagePath, (err) => {
+        if (err) throw err;
+        console.log('Rename complete!');
+    });
+
+    // req.file.filename = 'uploadedImage.jpg';
+
+    // res.send(req.file.destination + req.file.filename);
+
+    // await sharp(req.file.buffer)
+    //     .toFormat('jpeg')
+    //     .toFile(req.file.destination + req.file.filename);
+
+    var backgroundImage = [ImagePath];
+
+    videoshow(backgroundImage, videoOptions)
+    .audio('./audio/Audio.m4a')
+    .save('./videos/' + req.body.videoFilename + '.mp4')
+    .on('start', function (command) { 
+        console.log("starting videoshow");
+        console.log('ffmpeg process started:', command)
+    })
+    .on('error', function (err, stdout, stderr) {
+        console.error('Error:', err)
+        console.error('ffmpeg stderr:', stderr)
+    })
+    .on('end', function (output) {
+        console.error('Video created in:', output);
+        // res.sendFile(path.join(__dirname + '/index.html'));
+        res.download(output);
+    });
+}];
+
+/*
+var cpUpload = upload.fields([{ name: 'videoFilename', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
+app.post('/cool-profile', cpUpload, function (req, res, next) {
+  // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
+  //
+  // e.g.
+  //  req.files['avatar'][0] -> File
+  //  req.files['gallery'] -> Array
+  //
+  // req.body will contain the text fields, if there were any
+})
+*/
+
+// No file uploads
+/*
 exports.video_create_post =  [
     // Validate and santise the name field.
     body('videoFilename', 'Video name required').trim().isLength({ min: 1 }).escape(),
@@ -76,3 +134,4 @@ exports.video_create_post =  [
     }
 //    res.sendFile(path.join(__dirname + '/../createVideo.html'));
 ];
+*/
