@@ -1,10 +1,13 @@
 // Requiring dependencies
 const express = require("express");
 var path = require('path');
+const bodyParser = require('body-parser');
 
 var videoRouter = require('./routes/video.js');
 
 var app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Root route response
 // app.get('/', (req, res) => {
