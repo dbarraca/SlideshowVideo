@@ -1,5 +1,9 @@
+package-lock.json
+
 /node_modules
 
 /videos
+
+/audio
 
 /uploads/*

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slideshow Video</title>
+
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+        }
+
+        form * {
+            margin: 4px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Retrive Podcast Audio</h1>
+    <p>Provide a RSS feed link. </p>
+
+    <form action="/rss" method="POST">
+        <label>RSS Link: </label>
+        <input type="text" name="rssURL" id="rssURL" placeholder="RSS feed link"/>
+
+        <!--
+        <label>Number of Episodes: </label>
+        <input type="text" name="numEps" id="videoFilename" value="1" placeholder="Number of most recent episodes to get."/>
+        -->
+
+        <input type="submit" value="Retrieve Audio" />
+    </form>
+</body>
+</html>
