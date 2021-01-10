@@ -22,9 +22,15 @@ var videoOptions = {
     pixelFormat: 'yuv420p'
 };
 
+// Video Form page
+exports.index =  function(req, res) {
+    res.sendFile(path.join(__dirname + '/../createVideo.html'));
+};
+
+
 exports.video_get = function(req, res) {
     videoshow(images, videoOptions)
-    .audio('./audio/Audio.m4a')
+    .audio(' https://traffic.megaphone.fm/GLT7023135335.mp3')
     .save('./videos/video.mp4')
     .on('start', function (command) { 
         console.log("starting videoshow");
@@ -41,10 +47,6 @@ exports.video_get = function(req, res) {
     });
 };
 
-// Handle default video create on POST.
-exports.video_create_get =  function(req, res) {
-    res.sendFile(path.join(__dirname + '/../createVideo.html'));
-};
 
 /*
 var cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
@@ -66,6 +68,7 @@ function getExtension(filename) {
 }
 
 function renameUpload(input, req) {
+    console.log("--- Renaming" + input + "Upload ---");
     console.log("Path: " + req.files[input][0].path);
     console.log("Originalname: " + req.files[input][0].originalname);
     console.log("Extension: " + getExtension(req.files[input][0].originalname));
