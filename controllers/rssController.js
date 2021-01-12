@@ -34,10 +34,6 @@ exports.rss_retrieve_audio_post = [
     }
     else {
       (async () => {
-        // let feed = await parser.parseURL('http://feeds.serialpodcast.org/serialpodcast');
-        // let feed = await parser.parseURL('http://thereadercopypodcast.libsyn.com/rss');
-        // let feed = await parser.parseURL('https://feeds.megaphone.fm/replyall');
-        
         console.log(req.body.rssURL);
 
         let feed = await parser.parseURL(req.body.rssURL);
@@ -46,25 +42,26 @@ exports.rss_retrieve_audio_post = [
 
         var podcastName = feed.title.replace(/[/\\?.,\-%*:|"<>]/g, '');
 
+        let dir = path.join(__dirname + "/../audio/"+ podcastName);
+
+        if (!fs.existsSync(dir)){
+          fs.mkdirSync(dir);
+        }
+
         // var firstEp = feed.items[feed.items.length-1];
 
         var epCount = feed.items.length;
 
-        for (i = 0; i < 1 ; i++) {
+        for (i = 0; i < 3 ; i++) {
           var item = feed.items[i];
           console.log("Downloading episode title: ", item.title, " (URL: ", item.enclosure.url + ")");
 
-          var fileName = item.title.replace(/[/\\?.,\-%*: |"<>]/g, '');
-
-          var dir = path.join(__dirname + "/../audio/"+ podcastName);
-
-          if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir);
-          }
+          let fileName = item.title.replace(/[/\\?.,\-%*: |"<>]/g, '');
 
           DownloadEpisode(item.enclosure.url, dir + "/" + fileName + ".mp3");
         };
 
+        fs.rmdirSync(dir, { recursive: true });
         console.log("All episode downloads completed");
       })();
     }
