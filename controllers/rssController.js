@@ -52,7 +52,7 @@ exports.rss_retrieve_audio_post = [
 
         var epCount = feed.items.length;
 
-        for (i = 0; i < 3 ; i++) {
+        for (i = 0; i < 1 ; i++) {
           var item = feed.items[i];
           console.log("Downloading episode title: ", item.title, " (URL: ", item.enclosure.url + ")");
 
@@ -61,7 +61,7 @@ exports.rss_retrieve_audio_post = [
           DownloadEpisode(item.enclosure.url, dir + "/" + fileName + ".mp3");
         };
 
-        fs.rmdirSync(dir, { recursive: true });
+        // fs.rmdirSync(dir, { recursive: true });
         console.log("All episode downloads completed");
       })();
     }
@@ -71,12 +71,35 @@ exports.rss_retrieve_audio_post = [
 ];
 
 function DownloadEpisode(url, localPath) {
-  const dest = fs.createWriteStream(localPath);
+
+  // let size = fs.statSync(url);
+  // console.log("Audio File Size: " + size);
 
   fetch(url)
     .then(res => {
+      const dest = fs.createWriteStream(localPath);
+      const filesize = res.headers.get('content-length');
+      // DB - Delete later, just for quick console logs
+      let progress = 0;
+
+      let bytesCopied = 0;
+      console.time('Donwloaded episode "' + localPath + '"');
+
+      res.body.on('data', function(buffer){
+        bytesCopied+= buffer.length;
+
+        let percentage = ((bytesCopied / filesize) * 100).toFixed(2);
+
+        if (percentage - progress > 5) {
+          console.log(percentage + '%') // run once with this and later with this line commented
+          progress = percentage;
+        }
+      });
+      res.body.on('end', function(){
+        console.timeEnd('Donwloaded episode "' + localPath + '"');
+      });
       res.body.pipe(dest);
+
     })
-    .catch(err => console.error(err))
-    .finally(console.log("Episode finished downloading"));
+    .catch(err => console.error(err));
 }
